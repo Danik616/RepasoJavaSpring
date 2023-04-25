@@ -46,14 +46,14 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests().requestMatchers("/").permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/iniciarSesion")
+                .loginPage("/sign-in")
                 .permitAll()
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/salir"))
-                .logoutSuccessUrl("/iniciarSesion?salir")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/exit"))
+                .logoutSuccessUrl("/sign-in?exit")
                 .permitAll().and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
         return http.build();
