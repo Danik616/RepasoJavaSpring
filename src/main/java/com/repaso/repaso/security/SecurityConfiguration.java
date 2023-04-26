@@ -51,16 +51,15 @@ public class SecurityConfiguration {
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests().requestMatchers("/").permitAll()
                 .and()
-                .formLogin()
-                .loginPage("/sign-in")
-                .permitAll()
-                .and()
-                .logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/exit"))
-                .logoutSuccessUrl("/sign-in?exit")
-                .permitAll().and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+                .formLogin(login -> login
+                        .loginPage("/sign-in")
+                        .permitAll())
+                .logout(logout -> logout
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/exit"))
+                        .logoutSuccessUrl("/sign-in?exit")
+                        .permitAll()).exceptionHandling(handling -> handling.accessDeniedHandler(accessDeniedHandler));
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
