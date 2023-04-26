@@ -14,7 +14,7 @@ import jakarta.persistence.JoinColumn;
 
 @Entity(name="usuario")
 @Table
-public class Usuario {
+public class UserEntity {
 
     @Id
     @Column(name="id")
@@ -29,9 +29,18 @@ public class Usuario {
     @Column(name="password")
     private String password;
 
+    @Column(name="username")
+    private String username;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
     private Collection<Rol> roles;
+
+    
+    public UserEntity(String password, String username) {
+        this.password = password;
+        this.username = username;
+    }
 
     public long getId() {
         return id;
@@ -71,6 +80,14 @@ public class Usuario {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 

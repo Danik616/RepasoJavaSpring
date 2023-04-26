@@ -13,25 +13,25 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.repaso.repaso.entity.Rol;
-import com.repaso.repaso.entity.Usuario;
-import com.repaso.repaso.repository.IUsuarioRepository;
+import com.repaso.repaso.entity.UserEntity;
+import com.repaso.repaso.repository.IUserRepository;
 
 import jakarta.servlet.http.HttpSession;
 
 @Service
 public class UsuarioService implements IUsuarioService{
     @Autowired
-    private IUsuarioRepository usuarioRepository;
+    private IUserRepository usuarioRepository;
 
     
 
-    public UsuarioService(IUsuarioRepository usuarioRepository) {
+    public UsuarioService(IUserRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = usuarioRepository.findByEmail(username);
+        UserEntity usuario = usuarioRepository.findByEmail(username);
         if (usuario == null) {
             throw new UsernameNotFoundException("Usuario o password inválidos");
         }
